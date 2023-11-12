@@ -1,0 +1,620 @@
+%%
+% Copyright (c) 2017 - 2023, Pascal Wagler;
+% Copyright (c) 2014 - 2023, John MacFarlane
+%
+% All rights reserved.
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions
+% are met:
+%
+% - Redistributions of source code must retain the above copyright
+% notice, this list of conditions and the following disclaimer.
+%
+% - Redistributions in binary form must reproduce the above copyright
+% notice, this list of conditions and the following disclaimer in the
+% documentation and/or other materials provided with the distribution.
+%
+% - Neither the name of John MacFarlane nor the names of other
+% contributors may be used to endorse or promote products derived
+% from this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+% FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+% COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+% INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+% BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+% LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+% CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+% LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+% ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
+%%
+
+%%
+% This is the Eisvogel pandoc LaTeX template.
+%
+% For usage information and examples visit the official GitHub page:
+% https://github.com/Wandmalfarbe/pandoc-latex-template
+%%
+
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names,table}{xcolor}
+%
+\documentclass[
+  paper=a4,
+  ,captions=tableheading
+]{scrartcl}
+\usepackage{amsmath,amssymb}
+% Use setspace anyway because we change the default line spacing.
+% The spacing is changed early to affect the titlepage and the TOC.
+\usepackage{setspace}
+\setstretch{1.2}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\definecolor{default-linkcolor}{HTML}{A50000}
+\definecolor{default-filecolor}{HTML}{A50000}
+\definecolor{default-citecolor}{HTML}{4077C0}
+\definecolor{default-urlcolor}{HTML}{4077C0}
+\usepackage[margin=2.5cm,includehead=true,includefoot=true,centering,]{geometry}
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+% add backlinks to footnote references, cf. https://tex.stackexchange.com/questions/302266/make-footnote-clickable-both-ways
+\usepackage{footnotebackref}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Handin 2 - Disys},
+  pdfauthor={Timmi Andersen 202105859, Thea Hende 202105228, Helena Cooper 201906086},
+  hidelinks,
+  breaklinks=true,
+  pdfcreator={LaTeX via pandoc with the Eisvogel template}}
+\title{Handin 2 - Disys}
+\author{Timmi Andersen 202105859, Thea Hende 202105228, Helena Cooper
+201906086}
+\date{21/09/2023}
+
+
+
+%%
+%% added
+%%
+
+%
+% for the background color of the title page
+%
+\usepackage{pagecolor}
+\usepackage{afterpage}
+\usepackage{tikz}
+\usepackage[margin=2.5cm,includehead=true,includefoot=true,centering]{geometry}
+
+%
+% break urls
+%
+\PassOptionsToPackage{hyphens}{url}
+
+%
+% When using babel or polyglossia with biblatex, loading csquotes is recommended
+% to ensure that quoted texts are typeset according to the rules of your main language.
+%
+\usepackage{csquotes}
+
+%
+% captions
+%
+\definecolor{caption-color}{HTML}{777777}
+\usepackage[font={stretch=1.2}, textfont={color=caption-color}, position=top, skip=4mm, labelfont=bf, singlelinecheck=false, justification=raggedright]{caption}
+\setcapindent{0em}
+
+%
+% blockquote
+%
+\definecolor{blockquote-border}{RGB}{221,221,221}
+\definecolor{blockquote-text}{RGB}{119,119,119}
+\usepackage{mdframed}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
+\renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\color{blockquote-text}\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
+
+%
+% Source Sans Pro as the default font family
+% Source Code Pro for monospace text
+%
+% 'default' option sets the default
+% font family to Source Sans Pro, not \sfdefault.
+%
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+    \usepackage[default]{sourcesanspro}
+  \usepackage{sourcecodepro}
+  \else % if not pdftex
+    \usepackage[default]{sourcesanspro}
+  \usepackage{sourcecodepro}
+
+  % XeLaTeX specific adjustments for straight quotes: https://tex.stackexchange.com/a/354887
+  % This issue is already fixed (see https://github.com/silkeh/latex-sourcecodepro/pull/5) but the
+  % fix is still unreleased.
+  % TODO: Remove this workaround when the new version of sourcecodepro is released on CTAN.
+  \ifxetex
+    \makeatletter
+    \defaultfontfeatures[\ttfamily]
+      { Numbers   = \sourcecodepro@figurestyle,
+        Scale     = \SourceCodePro@scale,
+        Extension = .otf }
+    \setmonofont
+      [ UprightFont    = *-\sourcecodepro@regstyle,
+        ItalicFont     = *-\sourcecodepro@regstyle It,
+        BoldFont       = *-\sourcecodepro@boldstyle,
+        BoldItalicFont = *-\sourcecodepro@boldstyle It ]
+      {SourceCodePro}
+    \makeatother
+  \fi
+  \fi
+
+%
+% heading color
+%
+\definecolor{heading-color}{RGB}{40,40,40}
+\addtokomafont{section}{\color{heading-color}}
+% When using the classes report, scrreprt, book,
+% scrbook or memoir, uncomment the following line.
+%\addtokomafont{chapter}{\color{heading-color}}
+
+%
+% variables for title, author and date
+%
+\usepackage{titling}
+\title{Handin 2 - Disys}
+\author{Timmi Andersen 202105859, Thea Hende 202105228, Helena Cooper
+201906086}
+\date{21/09/2023}
+
+%
+% tables
+%
+
+%
+% remove paragraph indention
+%
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+%
+%
+% Listings
+%
+%
+
+
+%
+% general listing colors
+%
+\definecolor{listing-background}{HTML}{F7F7F7}
+\definecolor{listing-rule}{HTML}{B3B2B3}
+\definecolor{listing-numbers}{HTML}{B3B2B3}
+\definecolor{listing-text-color}{HTML}{000000}
+\definecolor{listing-keyword}{HTML}{435489}
+\definecolor{listing-keyword-2}{HTML}{1284CA} % additional keywords
+\definecolor{listing-keyword-3}{HTML}{9137CB} % additional keywords
+\definecolor{listing-identifier}{HTML}{435489}
+\definecolor{listing-string}{HTML}{00999A}
+\definecolor{listing-comment}{HTML}{8E8E8E}
+
+\lstdefinestyle{eisvogel_listing_style}{
+  language         = java,
+  numbers          = left,
+  xleftmargin      = 2.7em,
+  framexleftmargin = 2.5em,
+  backgroundcolor  = \color{listing-background},
+  basicstyle       = \color{listing-text-color}\linespread{1.0}%
+                      \lst@ifdisplaystyle%
+                      \small%
+                      \fi\ttfamily{},
+  breaklines       = true,
+  frame            = single,
+  framesep         = 0.19em,
+  rulecolor        = \color{listing-rule},
+  frameround       = ffff,
+  tabsize          = 4,
+  numberstyle      = \color{listing-numbers},
+  aboveskip        = 1.0em,
+  belowskip        = 0.1em,
+  abovecaptionskip = 0em,
+  belowcaptionskip = 1.0em,
+  keywordstyle     = {\color{listing-keyword}\bfseries},
+  keywordstyle     = {[2]\color{listing-keyword-2}\bfseries},
+  keywordstyle     = {[3]\color{listing-keyword-3}\bfseries\itshape},
+  sensitive        = true,
+  identifierstyle  = \color{listing-identifier},
+  commentstyle     = \color{listing-comment},
+  stringstyle      = \color{listing-string},
+  showstringspaces = false,
+  escapeinside     = {/*@}{@*/}, % Allow LaTeX inside these special comments
+  literate         =
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+  {…}{{\ldots}}1 {≥}{{>=}}1 {≤}{{<=}}1 {„}{{\glqq}}1 {“}{{\grqq}}1
+  {”}{{''}}1
+}
+\lstset{style=eisvogel_listing_style}
+
+%
+% Java (Java SE 12, 2019-06-22)
+%
+\lstdefinelanguage{Java}{
+  morekeywords={
+    % normal keywords (without data types)
+    abstract,assert,break,case,catch,class,continue,default,
+    do,else,enum,exports,extends,final,finally,for,if,implements,
+    import,instanceof,interface,module,native,new,package,private,
+    protected,public,requires,return,static,strictfp,super,switch,
+    synchronized,this,throw,throws,transient,try,volatile,while,
+    % var is an identifier
+    var
+  },
+  morekeywords={[2] % data types
+    % primitive data types
+    boolean,byte,char,double,float,int,long,short,
+    % String
+    String,
+    % primitive wrapper types
+    Boolean,Byte,Character,Double,Float,Integer,Long,Short
+    % number types
+    Number,AtomicInteger,AtomicLong,BigDecimal,BigInteger,DoubleAccumulator,DoubleAdder,LongAccumulator,LongAdder,Short,
+    % other
+    Object,Void,void
+  },
+  morekeywords={[3] % literals
+    % reserved words for literal values
+    null,true,false,
+  },
+  sensitive,
+  morecomment  = [l]//,
+  morecomment  = [s]{/*}{*/},
+  morecomment  = [s]{/**}{*/},
+  morestring   = [b]",
+  morestring   = [b]',
+}
+
+\lstdefinelanguage{XML}{
+  morestring      = [b]",
+  moredelim       = [s][\bfseries\color{listing-keyword}]{<}{\ },
+  moredelim       = [s][\bfseries\color{listing-keyword}]{</}{>},
+  moredelim       = [l][\bfseries\color{listing-keyword}]{/>},
+  moredelim       = [l][\bfseries\color{listing-keyword}]{>},
+  morecomment     = [s]{<?}{?>},
+  morecomment     = [s]{<!--}{-->},
+  commentstyle    = \color{listing-comment},
+  stringstyle     = \color{listing-string},
+  identifierstyle = \color{listing-identifier}
+}
+
+%
+% header and footer
+%
+\usepackage[headsepline,footsepline]{scrlayer-scrpage}
+
+\newpairofpagestyles{eisvogel-header-footer}{
+  \clearpairofpagestyles
+  \ihead*{Handin 2 - Disys}
+  \chead*{}
+  \ohead*{21/09/2023}
+  \ifoot*{Timmi Andersen 202105859, Thea Hende 202105228, Helena Cooper
+201906086}
+  \cfoot*{}
+  \ofoot*{\thepage}
+  \addtokomafont{pageheadfoot}{\upshape}
+}
+\pagestyle{eisvogel-header-footer}
+
+
+
+%%
+%% end added
+%%
+
+\begin{document}
+
+%%
+%% begin titlepage
+%%
+\begin{titlepage}
+\newgeometry{top=2cm, right=4cm, bottom=3cm, left=4cm}
+\tikz[remember picture,overlay] \node[inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{images/background9.pdf}};
+\newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
+\begin{flushleft}
+\noindent
+\\[-1em]
+\color[HTML]{5F5F5F}
+\makebox[0pt][l]{\colorRule[435488]{1.3\textwidth}{4pt}}
+\par
+\noindent
+
+% The titlepage with a background image has other text spacing and text size
+{
+  \setstretch{2}
+  \vfill
+  \vskip -8em
+  \noindent {\huge \textbf{\textsf{Handin 2 - Disys}}}
+    \vskip 2em
+  \noindent {\Large \textsf{Timmi Andersen 202105859, Thea Hende
+202105228, Helena Cooper 201906086} \vskip 0.6em \textsf{21/09/2023}}
+  \vfill
+}
+
+
+\end{flushleft}
+\end{titlepage}
+\restoregeometry
+\pagenumbering{arabic} 
+
+%%
+%% end titlepage
+%%
+
+% \maketitle
+
+
+\hypertarget{handin-2---disys}{%
+\section{Handin 2 - Disys}\label{handin-2---disys}}
+
+By Helena Cooper, Timmi Andersen and Thea Hende (202105228).
+
+\hypertarget{exercise-4.6---implementing-a-peer-to-peer-ledger}{%
+\subsection{Exercise 4.6 - Implementing a Peer-to-Peer
+ledger}\label{exercise-4.6---implementing-a-peer-to-peer-ledger}}
+
+\hypertarget{description-of-how-we-implemented-the-system}{%
+\subsubsection{\texorpdfstring{\textbf{Description of how we implemented
+the
+system}}{Description of how we implemented the system}}\label{description-of-how-we-implemented-the-system}}
+
+In our system we have defined three different kinds of structs, the
+\passthrough{\lstinline!Peer!}, \passthrough{\lstinline!ConnectedPeer!}
+and \passthrough{\lstinline!MessageStruct!} each serving different
+purposes.
+
+First the \passthrough{\lstinline!Peer!} struct is our way of
+representing a Peer in a Peer-to-Peer network, and it contains all
+relevant information. First off this is a
+\passthrough{\lstinline!Name!}, an \passthrough{\lstinline!Ip!} and a
+\passthrough{\lstinline!Port!} used to identify the peer. Furthermore it
+is a \passthrough{\lstinline!Ledger!}, and a set containing all Peers
+the respective Peer is connected to, \passthrough{\lstinline!Peers!}.
+Therefore if we were to draw the network, each node would be represented
+by an instance of the \passthrough{\lstinline!Peer!} struct. Next up the
+\passthrough{\lstinline!ConnectedPeer!} struct represents a connection
+made to a peer. This struct is therefore the type that is held in an
+array in each Peer's \passthrough{\lstinline!Peers!} field. Note that we
+could have chosen not to have this struct since it is very similar to
+the \passthrough{\lstinline!Peer!} struct. However we have chosen to
+include this to distinguish between \passthrough{\lstinline!Peers!} in
+the network and the peers a peer has made a connection to. In this way
+we also do not have to worry about the set of connected peers in the
+\passthrough{\lstinline!ConnectedPeer!} struct. Finally we have the
+\passthrough{\lstinline!MessageStruct!} struct which represents a
+message sent between peers over the network. Therefore this contains a
+\passthrough{\lstinline!Message!} describing either a request or
+response from a peer as a \passthrough{\lstinline!string!}, and some
+\passthrough{\lstinline!Data!} that the peer may use depending on the
+message.
+
+Next we can take a look on the \passthrough{\lstinline!Connect!},
+\passthrough{\lstinline!serverHandling!} and
+\passthrough{\lstinline!clientHandling!} methods. As a peer has the
+functionality of both a client and a server, we have separated this
+functionality into two methods, each handling one of the cases. When a
+peer starts up, in our case it is called
+\passthrough{\lstinline!Connect!}, we should therefore both do client
+and server stuff. Here we spawn one thread for server functionality and
+one for client functionality such that they can run concurrently. In
+\passthrough{\lstinline!clientHandling!} we do client stuff, which is
+first to attempt to make a connection to a given
+\passthrough{\lstinline!port!}. Depending on whether or not a connection
+was made succesfully we print a message of what happened. If we have a
+connection to another peer we request it to send us its set of connected
+peers using a \passthrough{\lstinline!MessageStruct!} containing the
+message \passthrough{\lstinline!"sendPeersRequest"!}. The sending of
+requests over the network is handle by the
+\passthrough{\lstinline!sendRequest!} method. At last we can receive
+responses on our connection using the
+\passthrough{\lstinline!handleResponse!} function.
+
+In \passthrough{\lstinline!serverHandling!} we do server stuff, which
+first is to start listening on a random port. Next we make sure that the
+peer we are working with is in its own set of
+\passthrough{\lstinline!Peers!}. This is to make sure that whenever we
+are asked to pass our set of peers to another peer that peer can add us
+to its own set. Then we run an infinite loop, where we can accept
+connections, and if we get connections we can handle requests coming
+from that connection through the \passthrough{\lstinline!handleRequest!}
+helper function.
+
+To handle requests and responses we have implemented a total of four
+helper functions, namely \passthrough{\lstinline!sendRequest!},
+\passthrough{\lstinline!sendResponse!},
+\passthrough{\lstinline!handleRequest!} and
+\passthrough{\lstinline!handleResponse!}. In
+\passthrough{\lstinline!sendRequest!} and
+\passthrough{\lstinline!sendResponse!} we send either a request or
+response over the network by using \passthrough{\lstinline!gob!} and an
+\passthrough{\lstinline!encoder!}. Furthermore
+\passthrough{\lstinline!handleRequest!} and
+\passthrough{\lstinline!handleResponse!} decodes a message sent with
+\passthrough{\lstinline!gob!} and reacts according to the
+\passthrough{\lstinline!Message!} string held in the
+\passthrough{\lstinline!MessageStruct!}. In case of
+\passthrough{\lstinline!handleRequest!} we have three different possible
+requests. First \passthrough{\lstinline!sendPeersRequest!} handles the
+case where a newly connected peer asks for the set of peers from the
+peer already in the network. Here we create a new
+\passthrough{\lstinline!MessageStruct!}, convert all
+\passthrough{\lstinline!ConnectedPeers!} held in the current peer to an
+array of strings (using the
+\passthrough{\lstinline!prepareConnectedPeerToSend!} helper function),
+and sends this as a reponse. Next ``joinRequest'' handles the case where
+a newly connected peer tells another peer that it has connected to the
+network. Here we create a \passthrough{\lstinline!ConnectedPeer!} from
+the \passthrough{\lstinline!Data!} array using the
+\passthrough{\lstinline!makingConnectedPeer!} helper function, and then
+adds this to peer's map of peers, \passthrough{\lstinline!Peers!}. At
+last \passthrough{\lstinline!transactionRequest!} handles the case where
+a \passthrough{\lstinline!Transaction!} was sent to a peer. Here we
+first create a \passthrough{\lstinline!Transaction!} from the
+information held in \passthrough{\lstinline!Data!} and calls the
+\passthrough{\lstinline!Transact!} method on the peer´s ledger. In case
+of \passthrough{\lstinline!handleResponse!} we currently have one type
+of response we can handle, namely
+\passthrough{\lstinline!sendPeersResponse!}. This handles the case,
+where a peer sends it set of peers to a newly connected peer in the
+network. Here we run through the \passthrough{\lstinline!Data!} array
+and unfold each set of three strings in the array to one
+\passthrough{\lstinline!ConnectedPeer!}, and we add this to newly
+connected peer´s set of peers. Because we assume the peer we connected
+to has a connection to all other peers, then our current peer should now
+be connected to all other peers as well. At last we prepare a message to
+tell all other peers that we joined the network, through the
+\passthrough{\lstinline!"joinRequest"!}. This message is then flooded
+across the network.
+
+At last the \passthrough{\lstinline!Peer!} can access two other
+functions, namely \passthrough{\lstinline!FloodMessage!} and
+\passthrough{\lstinline!FloodTransaction!}. In
+\passthrough{\lstinline!FloodMessage!} a peer can flood a message to all
+other peers in the network, which is done by iterating through the set
+of connected peers and making a temporary connection in where we send
+the message. Furthermore in \passthrough{\lstinline!FloodTransaction!}
+we can flood a transaction to all peers in the network by making a
+\passthrough{\lstinline!MessageStruct!} where we input the information
+from the \passthrough{\lstinline!Transaction!} into the
+\passthrough{\lstinline!Data!} array.
+
+\hypertarget{description-of-how-we-tested-the-system}{%
+\subsubsection{\texorpdfstring{\textbf{Description of how we tested the
+system}}{Description of how we tested the system}}\label{description-of-how-we-tested-the-system}}
+
+To test the system we have made the \passthrough{\lstinline!handin.go!}
+file as asked, where we create NUMBER peers,
+\passthrough{\lstinline!p1!} through \passthrough{\lstinline!pn!} and
+connect all these to each other by calling
+\passthrough{\lstinline!pi.Connect!} with the
+\passthrough{\lstinline!addr!} and \passthrough{\lstinline!port!} of the
+previous peer, \passthrough{\lstinline!p(i-1)!}. THen\ldots{}
+
+\hypertarget{eventual-consistency}{%
+\subsubsection{\texorpdfstring{\textbf{Eventual
+consistency}}{Eventual consistency}}\label{eventual-consistency}}
+
+Right now our network has eventual consistency because we allow all
+transaction to go through. This means that all peers will eventually
+hear all messages resulting in every peers ledger being identical. If a
+transaction were to be rejected due to a account going a
+
+\hypertarget{exercise-5.1---one-time-pad-theory}{%
+\subsection{Exercise 5.1 - One-time pad
+theory}\label{exercise-5.1---one-time-pad-theory}}
+
+\hypertarget{question-1}{%
+\subsubsection{Question 1}\label{question-1}}
+
+In this case the employees salary will be represented with maximum 20
+bits assuming he earns less than 1 million kroner. He can at most earn
+\(999.999\) kr. which is represented as the following in binary:
+
+\[
+011110100001000111111
+\]
+
+The most significant bit (bit 20 furthest left) will be a \(0\) in the
+payment order. If he wanted to receive an extra million in is next
+salary he should flip the most significant bit to:
+
+\[
+111110100001000111111
+\]
+
+The only issue now is that the employee dosn't see the real payment
+order but the encrypted payment order. The ciphertext that he sees is
+generated by a random secret key so he cant actually be sure that the
+most significant bit stays a one. If the secret key also has a \(1\) as
+the most significant bit he will receive the same salary as normal and
+if it's a \(0\) he will be a millionaire.
+
+\hypertarget{question-2}{%
+\subsubsection{Question 2}\label{question-2}}
+
+The issue is not a confidentiality problem because the employee actually
+cannot read the message only the encryption. The real issue is
+authenticity because the information has been modified by unautherised
+people.
+
+\hypertarget{question-3}{%
+\subsubsection{Question 3}\label{question-3}}
+
+As stated we have an authenticity problem and not a confidentiality
+problem. If done correctly one-time pad is considered unbreakable. The
+message cannot be deciphered unless you have the secret-key. The issue
+here is that the employee is able to tamper with the ciphertext which
+may result in a better salary or may result in a worse salary. One-time
+pad insures confidentiality and not authenticity.
+
+\hypertarget{question-4}{%
+\subsubsection{Question 4}\label{question-4}}
+
+Assumming the adversary knows that the original bit \(m_i=0\) with
+probability .
+
+\end{document}
